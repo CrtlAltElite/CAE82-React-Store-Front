@@ -1,24 +1,25 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Button from './components/Button';
+import Error from './components/Error';
+import { ThemeProvider } from '@mui/material/styles';
+import rainbowTheme from './themes/rainbowTheme';
+import NavBar from './components/NavBar';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={rainbowTheme}>
+      <NavBar>
+
+        <h1>My First React Page!!!!!!</h1>
+        <Error  className="my_class">
+          Some Rando - Error
+        </Error>
+        <Button variant="text">Click Me Beautiful</Button>
+        <img  src="https://res.cloudinary.com/cae67/image/upload/v1628184276/sample.jpg" alt="test"/>
+      
+      </NavBar>
+    </ThemeProvider>
   );
 }
 
