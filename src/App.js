@@ -10,7 +10,11 @@ import {getUser} from './api/apiBasicAuth';
 import { postCategory } from './api/apiCategory';
 import { getItemsByCat } from './api/apiItem';
 import {CancelToken} from 'apisauce';
+import LoginForm from './forms/LoginForm';
+import CatForm from './forms/CatForm';
 
+import ItemForm from './forms/ItemForm';
+import AdminSelectCat from './components/AdminSelectCat';
 const handleClick = async () => {
   const source = CancelToken.source();
   const response_object = await postCategory('ZtyZo5GhHFuQ9tgbKAROkGzK3jTVSlAtEswA8paYfAQ', 'newCAT',source.token);
@@ -31,7 +35,12 @@ function App() {
         </Error>
         <Button variant="text" onClick={()=>alert('clciky')}>Click Me Beautiful</Button>
         <img  src="https://res.cloudinary.com/cae67/image/upload/v1628184276/sample.jpg" alt="test"/>
-      
+        <LoginForm />
+        <hr/>
+        {/* <AdminSelectCat/> */}
+        <hr/> <br/><br/>
+        <ItemForm/>
+
       </NavBar>
     </ThemeProvider>
   );
