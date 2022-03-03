@@ -1,20 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Button from './components/Button';
 import Error from './components/Error';
 import { ThemeProvider } from '@mui/material/styles';
 import rainbowTheme from './themes/rainbowTheme';
 import NavBar from './components/NavBar';
-
 import {getUser} from './api/apiBasicAuth';
 import { postCategory } from './api/apiCategory';
 import { getItemsByCat } from './api/apiItem';
 import {CancelToken} from 'apisauce';
 import LoginForm from './forms/LoginForm';
 import CatForm from './forms/CatForm';
-
+import AdminMenu from './components/AdminMenu';
 import ItemForm from './forms/ItemForm';
 import AdminSelectCat from './components/AdminSelectCat';
+import CategoryBar from './components/CategoryBar';
+import ItemBrowser from './components/ItemBrowser';
+import SnackBar from './components/SnackBar';
+
+
 const handleClick = async () => {
   const source = CancelToken.source();
   const response_object = await postCategory('ZtyZo5GhHFuQ9tgbKAROkGzK3jTVSlAtEswA8paYfAQ', 'newCAT',source.token);
@@ -23,24 +27,17 @@ const handleClick = async () => {
 
 
 function App() {
+  const [alert, setAlert]=useState({});
+
   return (
     <ThemeProvider theme={rainbowTheme}>
+      <SnackBar alert={alert} setAlert={setAlert}/>
       <NavBar>
-
+        <CategoryBar setAlert={setAlert}/>
+        <ItemBrowser />
         <Button onClick={handleClick}>Do API Call</Button>
 
-        <h1>My First React Page!!!!!!</h1>
-        <Error  className="my_class">
-          Some Rando - Error
-        </Error>
-        <Button variant="text" onClick={()=>alert('clciky')}>Click Me Beautiful</Button>
-        <img  src="https://res.cloudinary.com/cae67/image/upload/v1628184276/sample.jpg" alt="test"/>
-        <LoginForm />
-        <hr/>
-        {/* <AdminSelectCat/> */}
-        <hr/> <br/><br/>
-        <ItemForm/>
-
+        <AdminMenu/>
       </NavBar>
     </ThemeProvider>
   );
