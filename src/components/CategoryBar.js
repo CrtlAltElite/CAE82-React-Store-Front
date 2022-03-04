@@ -1,9 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import Chip from '@mui/material/Chip';
-const categories = [{id: 1, name:"Ditto"}, {id:2, name:"Pikachu"}, {id:3, name:"Mew"}]
+import useCategories from '../hooks/useCategories';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import { AppContext } from '../context/AppContext';
+import Error from './Error';
+// const categories = [{id: 1, name:"Ditto"}, {id:2, name:"Pikachu"}, {id:3, name:"Mew"}]
 
-export default function CategoryBar({setAlert}) {
-    const [actCat, setActCat]= useState({})
+export default function CategoryBar({handleClick=()=>{}}) {
+    const [actCat, setActCat]= useState({});
+    const {categories, error} = useCategories();
     
     const handleActCat=(cat)=>{
         if (actCat === cat){
@@ -11,9 +17,22 @@ export default function CategoryBar({setAlert}) {
         }else{
             setActCat(cat)
         }
-        setAlert({msg:`You changed the category to ${cat.name}`, cat:'error'})
+    }
+    
+    if (error){
+        return(
+        <Box sx={{display:'flex'}}>
+        <Error>{error}</Error>
+        </Box>)
     }
 
+    if (!categories){
+        return(
+        <Box sx={{display:'flex'}}>
+            <CircularProgress />
+        </Box>)
+    }
+  
   return (
   <>
     {categories?.map(
@@ -25,7 +44,7 @@ export default function CategoryBar({setAlert}) {
             label={cat.name}
             color="primary"
             size="small"
-            onClick={()=>{handleActCat(cat)}}
+            onClick={()=>{handleActCat(cat); handleClick(cat);}}
             />
             :
             <Chip
@@ -34,7 +53,7 @@ export default function CategoryBar({setAlert}) {
             color="primary"
             variant="outlined"
             size="small"
-            onClick={()=>{handleActCat(cat)}}
+            onClick={()=>{handleActCat(cat); handleClick(cat);}}
             />
         )
     )}

@@ -26,6 +26,7 @@ const themeOptions =
     },
 
     palette: {
+      mode: 'light',
       type: 'light',
       primary: {
         main: '#BE0AFF',

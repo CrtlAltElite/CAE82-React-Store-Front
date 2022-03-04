@@ -7,9 +7,17 @@ import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import useItems from '../hooks/useItems';
+import Error from '../components/Error';
 
+export default function ItemBrowser({categoryID}) {
+  const {error, items} =useItems(categoryID);
 
-export default function ItemBrowser() {
+  if (error){return (
+    <Box sx={{display:'flex'}}>
+      <Error>{error}</Error>
+    </Box>)
+}
 
   if (!items){
       return(
@@ -57,8 +65,3 @@ export default function ItemBrowser() {
     </ImageList>
   );
 }
-
-const item1={id:1,name:"Tyedye",price:7,img:'https://res.cloudinary.com/cae67/image/upload/v1628193056/fakebook_shop/tiedyeshirt_nufhjn.jpg'}
-const item2={id:2,name:"Eryn's Shoes",price:10.99,img:'https://res.cloudinary.com/cae67/image/upload/v1628184304/fakebook_shop/pinkshoes_ratrx5.jpg'}
-const item3={id:3,name:"Marvel",price:9.9,img:'https://res.cloudinary.com/cae67/image/upload/v1628193027/fakebook_shop/marvel_shirt_t7epwz.jpg'}
-const items=[item1, item2, item3]
