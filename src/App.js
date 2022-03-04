@@ -2,8 +2,6 @@ import React, {useState} from 'react';
 import './App.css';
 import Button from './components/Button';
 import Error from './components/Error';
-import { ThemeProvider } from '@mui/material/styles';
-import rainbowTheme from './themes/rainbowTheme';
 import NavBar from './components/NavBar';
 import {getUser} from './api/apiBasicAuth';
 import { postCategory } from './api/apiCategory';
@@ -17,7 +15,8 @@ import AdminSelectCat from './components/AdminSelectCat';
 import CategoryBar from './components/CategoryBar';
 import ItemBrowser from './components/ItemBrowser';
 import SnackBar from './components/SnackBar';
-
+import Cart from './components/Cart/Index';
+import ShopBrowser from './views/ShopBrowser';
 
 const handleClick = async () => {
   const source = CancelToken.source();
@@ -27,20 +26,22 @@ const handleClick = async () => {
 
 
 function App() {
-  const [alert, setAlert]=useState({});
+
 
   return (
-    <ThemeProvider theme={rainbowTheme}>
-      <SnackBar alert={alert} setAlert={setAlert}/>
+    <>
+      <SnackBar/>
       <NavBar>
-        <CategoryBar setAlert={setAlert}/>
-        <ItemBrowser />
-        <Button onClick={handleClick}>Do API Call</Button>
-
+        <ShopBrowser/>
         <AdminMenu/>
       </NavBar>
-    </ThemeProvider>
+    </>
   );
 }
 
 export default App;
+
+
+// <CategoryBar setAlert={setAlert}/>
+// <ItemBrowser />
+// <Button onClick={handleClick}>Do API Call</Button>

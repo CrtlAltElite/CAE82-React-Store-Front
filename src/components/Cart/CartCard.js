@@ -4,26 +4,27 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import AddRemoveCartItem from './AddRemoveCartItem';
 
 
 
-export default function CartCard({item, qty, setQty}) {
+export default function CartCard({item}) {
   return (
     <Card sx={{height:"100%" }}>
       <CardContent>
-        <Typography variant="h5" color="text.secondary" gutterBottom>
+        <Typography variant="h6" gutterBottom>
           {item.name}
         </Typography>
 
-        <Typography variant="caption" color="text.secondary">
+        <Typography variant="body2" color="text.secondary">
           {item.desc.slice(0,20)}
         </Typography>
-        <Typography variant="body2">
-          ${item.price}
+        <Typography variant="h6" color="text.secondary">
+          ${item.price.toFixed(2)}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">+</Button><Button size="small">-</Button>
+        <AddRemoveCartItem item={item}/>
       </CardActions>
     </Card>
   );

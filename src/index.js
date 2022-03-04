@@ -4,11 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import CssBaseline from '@mui/material/CssBaseline';
-
+import { ThemeProvider } from '@mui/material/styles';
+import rainbowTheme from './themes/rainbowTheme';
+import AppContextProvider from "./context/AppContext";
 ReactDOM.render(
   <React.StrictMode>
-    <CssBaseline />
-    <App />
+    <ThemeProvider theme={rainbowTheme}>
+      <AppContextProvider>
+        <CssBaseline />
+        <App />
+      </AppContextProvider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

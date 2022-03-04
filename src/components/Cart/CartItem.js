@@ -1,15 +1,20 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import {useTheme} from '@mui/material/styles';
+import CartCard from './CartCard';
+import ChangeCartItemQuantity from './ChangeCartItemQuantity';
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.secondary : theme.palette.primary,
     ...theme.typography.body2,
     padding: theme.spacing(1),
+    alignItems: 'center',
+    justifyContent:'center',
     textAlign: 'center',
+    display:'flex',
     color: theme.palette.text.secondary,
   }));
   const displayItem={id:1,name:"Tyedye",price:7,img:'https://res.cloudinary.com/cae67/image/upload/v1628193056/fakebook_shop/tiedyeshirt_nufhjn.jpg'}
@@ -24,28 +29,39 @@ const Item = styled(Paper)(({ theme }) => ({
 
     const [qty,setQty]=useState(cart.filter((cartItem)=>cartItem.id === item.id).length)
 
-    //useeffect
+    useEffect(
+        ()=>{
+            setQty(cart.filter((cartItem)=>cartItem.id === item.id).length)
+        },[cart, item]
+    )
+    
 
   return (
-    <Grid container spacing={2} sx={{my:2, pr:2, border: '1px solid', borderRadius:1, borderColor:"neutral"}}>
-        <Grid item md={4} xs={6}>
-            <Item sx={{height:'50%'}}>
-                <Avatar alt={item.name} sx={{height:'50%', width:"50%"}} variant="rounded" src={item.img}/>
+    <Grid container spacing={2} sx={{m:1, pr:2, border: '1px solid', borderRadius:1, alignItems:"stretch"}}>
+        <Grid item md={4} sm={6} xs={12}>
+            {console.log(theme)}
+            <Item sx={{height:'100%'}}>
+                <Avatar alt={item.name} sx={{height:'100%', width:"100%"}} variant="rounded" src={item.img}/>
             </Item>
         </Grid>
-        <Grid item md={3} xs={6}>
-            <Item sx={{height:'50%'}}>
-                {item.name}
+        <Grid item md={3} sm={6} xs={12}>
+            <Item sx={{height:'100%'}}>
+                <CartCard item={item}/>
             </Item>
         </Grid>
-        <Grid item md={2} xs={6}>
-            <Item sx={{height:'50%'}}>
-                ChangeQuanity
+        <Grid item md={2} sm={6} xs={12}>
+            <Item sx={{height:'100%', alignContent:'center'}}>
+                <ChangeCartItemQuantity item={item} qty={qty}/>
             </Item>
         </Grid>
-        <Grid item md={3} xs={6}>
-            <Item sx={{height:'50%'}}>
+        <Grid item md={3} sm={6} xs={12}>
+            <Item sx={{height:'100%'}}>
+                <div>
+                <strong>Item Subtotal</strong>
+                <br/>
                 ${(item.price*qty).toFixed(2)}
+                </div>
+
             </Item>
         </Grid>
         
