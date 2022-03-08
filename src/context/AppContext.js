@@ -1,4 +1,5 @@
-import {createContext, useState} from "react";
+import {createContext, useState, useReducer, useEffect} from "react";
+import {shopReducer, cartActions} from "../reducers/shopReducer";
 
 export const AppContext = createContext();
 
@@ -11,8 +12,26 @@ const AppContextProvider = ({children})=>{
         }
     }
 
+    const getCartFromLS=()=>{
+        let cart = localStorage.getItem('cart');
+        if(cart){
+            return JSON.parse(cart)
+        }
+        return []
+    }
+
+
+
     const [user, _setUser]=useState(getUserFromLS());
     const [alert, setAlert]=useState({});
+    const [cart, dispatch] = useReducer(shopReducer,getCartFromLS())
+
+    useEffect(
+        ()=>{
+            localStorage.setItem('cart', JSON.stringify(cart))
+        },
+        [cart]
+    )
 
     const values={
         user,
@@ -21,7 +40,23 @@ const AppContextProvider = ({children})=>{
             _setUser(user)
         },
         alert,
-        setAlert
+        setAlert,
+        cart,
+        addToCart:(item)=>{
+            dispatch({type: cartActions.addToCart, item})
+        },
+        addBulkToCart:(item)=>{
+            dispatch({type: cartActions.addBulkToCart, item})
+        },
+        removeFromCart:(item)=>{
+            dispatch({type: cartActions.removeFromCart, item})
+        },
+        emptyCart:()=>{
+            dispatch({type:cartActions.emptyCart})
+        },
+        removeAllFromCart:(item)=>{
+            dispatch({type: cartActions.removeAllFromCart, item})
+        }
     }
 
     return (

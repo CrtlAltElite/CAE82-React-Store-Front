@@ -3,41 +3,41 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import CatForm from '../forms/CatForm';
+import ItemForm from '../forms/ItemForm';
 import Typography from '@mui/material/Typography';
-import useCategories from '../hooks/useCategories';
-import Error from '../components/Error';
+import useItems from '../hooks/useItems';
+import Error from './Error';
 
-export default function AdminSelectCat() {
-    const [cat, setCat] = useState('');
-    const {categories, error} = useCategories();
+export default function AdminSelectItem() {
+    const [item, setItem] = useState('');
+    const {items, error} = useItems();
 
 
     const handleChange = (event) => {
         console.log(event.target.value)
         if(event.target.value === "default"){
-            setCat("")
+            setItem("")
             return
         }
-        setCat(JSON.parse(event.target.value));
+        setItem(JSON.parse(event.target.value));
     };
   
   return (
       <>
         <FormControl fullWidth>
-            <InputLabel id="category-label">Category</InputLabel>
+            <InputLabel id="item-label">Item</InputLabel>
             <Select
-                labelId="category-label"            
-                label="Category"
-                name="category_id"
-                value={cat?JSON.stringify(cat):'default'}
-                placeholder="category"
+                labelId="item-label"            
+                label="Item"
+                name="item_id"
+                value={item?JSON.stringify(item):'default'}
+                placeholder="item"
                 onChange={(event)=>handleChange(event)}
             >
                 <MenuItem value="default"><em>None</em></MenuItem>
-                {categories?.map(
-                    (category)=>(
-                        <MenuItem key={category.id}  value={JSON.stringify(category)}>{category.name} | {category.id}</MenuItem>
+                {items?.map(
+                    (i)=>(
+                        <MenuItem key={i.id}  value={JSON.stringify(i)}>{i.name} | {i.id}</MenuItem>
                     )
                 )}
                 
@@ -45,19 +45,19 @@ export default function AdminSelectCat() {
             <Error>{error}</Error>
         </FormControl>
     
-        {cat ?
+        {item ?
         <>
             <Typography sx={{p:4}} variant="h5">
-                Edit {cat.name}
+                Edit {item.name}
             </Typography>
-            <CatForm category={cat}/>
+            <ItemForm item={item}/>
         </>
             :
         <>
             <Typography sx={{p:4}} variant="h5">
-                Create Category
+                Create Item
             </Typography>
-            <CatForm/>
+            <ItemForm/>
         </>
         }
         </>  

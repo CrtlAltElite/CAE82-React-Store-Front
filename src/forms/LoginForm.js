@@ -25,7 +25,7 @@ export default function LoginForm() {
     const [loginCreds, setLoginCreds] = useState({})
     const [error, setError] = useState('')
 
-    const doLogin = useLogin(loginCreds, setError, setUser, setLoginCreds)
+    useLogin(loginCreds, setError, setUser, setLoginCreds)
 
     const handleSubmit=async (values)=>{
         setLoginCreds(values)
