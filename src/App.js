@@ -17,6 +17,7 @@ import ItemBrowser from './components/ItemBrowser';
 import SnackBar from './components/SnackBar';
 import Cart from './components/Cart/Index';
 import ShopBrowser from './views/ShopBrowser';
+import AdminSelectItem from './components/AdminSelectItem';
 
 const handleClick = async () => {
   const source = CancelToken.source();
@@ -32,8 +33,7 @@ function App() {
     <>
       <SnackBar/>
       <NavBar>
-        <ShopBrowser/>
-        <AdminMenu/>
+        <AdminSelectItem/>
       </NavBar>
     </>
   );

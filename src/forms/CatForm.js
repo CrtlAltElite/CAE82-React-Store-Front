@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {useState} from 'react'
 import * as Yup from "yup";
 import { useFormik } from 'formik';
 import Button from '../components/Button';
 import TextField from '@mui/material/TextField';
+import useCreateCategory from '../hooks/useCreateCategory';
+import useEditCategory from '../hooks/useEditCategory';
+import useDeleteCategory from '../hooks/useDeleteCategory';
 
 const FormSchema =Yup.object(
    { 
@@ -12,16 +15,24 @@ const FormSchema =Yup.object(
 
 
 // {id:1, name:"Pants"}
-export default function CatForm({ category={id:1, name:"Pants"} }) {
+export default function CatForm({ category }) {
+
+    const [newCat, setNewCat] = useState({})
+    const [editCat, setEditCat] = useState({})
+    const [deleteCat, setDeleteCat] = useState({})
+
+    useCreateCategory(newCat)
+    useEditCategory(editCat)
+    useDeleteCategory(deleteCat)
     const initialValues ={
         name:category?.name ?? ''
     };
 
     const handleSubmit =(values, resetForm)=>{
         if (!category){
-            console.log('Creating Cat')
+            setNewCat(values)
         }else{
-            console.log('Editing Cat')
+            setEditCat({...values, id:category.id})
         }
         console.log(values)
         resetForm(initialValues);
@@ -34,6 +45,10 @@ export default function CatForm({ category={id:1, name:"Pants"} }) {
         enableReinitialize:true
 
     })
+    
+    const handleDelete=()=>{
+        setDeleteCat(category)
+    }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -50,7 +65,8 @@ export default function CatForm({ category={id:1, name:"Pants"} }) {
             error={formik.touched.name && Boolean(formik.errors.name)}
             helperText={formik.touched.name && formik.errors.name}        
         />
-        <Button type="submit" sx={{width:"100%"}}>Submit</Button>
+        <Button type="submit" sx={{width:"100%", my:1}}>Submit</Button>
+        <Button color="error" onClick={()=>handleDelete()} sx={{width:"100%", my:1}}>Delete Category</Button>
     </form>
   )
 }

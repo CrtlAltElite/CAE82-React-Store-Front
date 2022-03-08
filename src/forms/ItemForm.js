@@ -9,8 +9,11 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
+import useCategories from '../hooks/useCategories';
+import useCreateItem from '../hooks/useCreateItem';
+import useEditItem from '../hooks/useEditItem';
+import useDeleteItem from '../hooks/useDeleteItem';
 
-let categories=[{id:1,name:"Shirts"},{id:2,name:"Shoes"},{id:3, name:"Hats"}]
 
 const FormSchema = Yup.object({
     "name":Yup.string().required("Required"),
@@ -21,7 +24,17 @@ const FormSchema = Yup.object({
 })
 
 // {id:1, name:"item1", desc:'my test item', category_id:3, price: 9.99, img:'my-image.png'}
-export default function ItemForm({item={id:1, name:"item1", desc:'my test item', category_id:3, price: 9.99, img:'my-image.png'}}) {
+export default function ItemForm({item}) {
+    const {categories, catError} = useCategories();
+
+    const [newItem, setNewItem] = useState({})
+    const [editItem, setEditItem] = useState({})
+    const [deleteItem, setDeleteItem] = useState({})
+
+
+    useCreateItem(newItem)
+    useEditItem(editItem)
+    useDeleteItem(deleteItem)
 
     const initialValues={
         name:item?.name ?? '',
@@ -34,9 +47,9 @@ export default function ItemForm({item={id:1, name:"item1", desc:'my test item',
     const handleSubmit =(values,resetForm)=>{
         console.log(values)
         if(!item){
-            console.log("Create")
+            setNewItem(values)
         }else{
-            console.log("edit")
+            setEditItem({...values, id:item.id})
         }
         resetForm(initialValues);
     }
@@ -48,6 +61,10 @@ export default function ItemForm({item={id:1, name:"item1", desc:'my test item',
         enableReinitialize:true
 
     })
+        
+    const handleDelete=()=>{
+        setDeleteItem(item)
+    }
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -121,10 +138,12 @@ export default function ItemForm({item={id:1, name:"item1", desc:'my test item',
             <MenuItem key={category.id} value={category.id}>{category.name} | {category.id}</MenuItem>
         ))}
     </Select>
+    {catError}
     <FormHelperText>{formik.touched.category_id && formik.errors.category_id}</FormHelperText>
 </FormControl>
 
-<Button type="submit" sx={{ width: "100%" }}>Submit</Button>
+<Button type="submit" sx={{ width: "100%", my:1 }}>Submit</Button>
+<Button color="error" onClick={()=>handleDelete()} sx={{width:"100%", my:1}}>Delete Item</Button>
 
 </form>
   )
