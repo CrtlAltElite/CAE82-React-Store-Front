@@ -151,7 +151,7 @@ export default function NavBar({children}) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={user.name} src={user.icon ? `https://avatars.dicebear.com/api/big-smile/${user.icon}.svg` : `https://avatars.dicebear.com/api/big-smile/${getRandomInt(0,1000)}.svg` } />
+                <Avatar alt={user?.name} src={user?.icon ? `https://avatars.dicebear.com/api/big-smile/${user.icon}.svg` : `https://avatars.dicebear.com/api/big-smile/${getRandomInt(0,1000)}.svg` } />
               </IconButton>
             </Tooltip>
             <Menu
