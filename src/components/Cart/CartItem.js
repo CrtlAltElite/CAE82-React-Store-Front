@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import Paper from '@mui/material/Paper';
@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import {useTheme} from '@mui/material/styles';
 import CartCard from './CartCard';
 import ChangeCartItemQuantity from './ChangeCartItemQuantity';
+import { AppContext } from '../../context/AppContext';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? theme.palette.secondary : theme.palette.primary,
@@ -17,16 +18,11 @@ const Item = styled(Paper)(({ theme }) => ({
     display:'flex',
     color: theme.palette.text.secondary,
   }));
-  const displayItem={id:1,name:"Tyedye",price:7,img:'https://res.cloudinary.com/cae67/image/upload/v1628193056/fakebook_shop/tiedyeshirt_nufhjn.jpg'}
-  export default function CartItem({item=displayItem}) {
+  
+  export default function CartItem({item}) {
     const theme = useTheme();
-      
-    const item1={id:1,name:"Tyedye",price:7,img:'https://res.cloudinary.com/cae67/image/upload/v1628193056/fakebook_shop/tiedyeshirt_nufhjn.jpg'}
-    const item2={id:2,name:"Eryn's Shoes",price:10.99,img:'https://res.cloudinary.com/cae67/image/upload/v1628184304/fakebook_shop/pinkshoes_ratrx5.jpg'}
-    const item3={id:3,name:"Marvel",price:9.9,img:'https://res.cloudinary.com/cae67/image/upload/v1628193027/fakebook_shop/marvel_shirt_t7epwz.jpg'}
+    const {cart} = useContext(AppContext);
     
-    const cart=[item1, item1, item2, item3, item3]
-
     const [qty,setQty]=useState(cart.filter((cartItem)=>cartItem.id === item.id).length)
 
     useEffect(

@@ -34,7 +34,7 @@ export default function AdminSelectCat() {
                 placeholder="category"
                 onChange={(event)=>handleChange(event)}
             >
-                <MenuItem value="default"><em>None</em></MenuItem>
+                <MenuItem value="default"><em>Select Category to Edit</em></MenuItem>
                 {categories?.map(
                     (category)=>(
                         <MenuItem key={category.id}  value={JSON.stringify(category)}>{category.name} | {category.id}</MenuItem>

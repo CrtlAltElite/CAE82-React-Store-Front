@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -9,9 +9,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import useItems from '../hooks/useItems';
 import Error from '../components/Error';
+import {AppContext} from '../context/AppContext';
 
 export default function ItemBrowser({categoryID}) {
   const {error, items} =useItems(categoryID);
+  const {addToCart} = useContext(AppContext);
+
+  const handleAddToCart =(item)=>{
+    addToCart(item)
+  }
 
   if (error){return (
     <Box sx={{display:'flex'}}>
@@ -51,6 +57,7 @@ export default function ItemBrowser({categoryID}) {
                           <IconButton
                           sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                           aria-label={`info about ${item.name}`}
+                          onClick={()=>{handleAddToCart(item)}}
                         >
                           
                           <AddShoppingCartTwoToneIcon />

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -21,6 +21,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import LocalGroceryStoreTwoToneIcon from '@mui/icons-material/LocalGroceryStoreTwoTone';
 import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone';
+import ThemeSwitch from './ThemeSwitch';
+import {AppContext} from '../context/AppContext'
+import getRandomInt from '../helpers/random';
+import Badge from '@mui/material/Badge';
+import {Link} from 'react-router-dom';
 
 const settings = ['Logout'];
 
@@ -94,6 +99,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function NavBar({children}) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const {user, cart} = useContext(AppContext);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -145,7 +151,7 @@ export default function NavBar({children}) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={user.name} src={user.icon ? `https://avatars.dicebear.com/api/big-smile/${user.icon}.svg` : `https://avatars.dicebear.com/api/big-smile/${getRandomInt(0,1000)}.svg` } />
               </IconButton>
             </Tooltip>
             <Menu
@@ -164,11 +170,15 @@ export default function NavBar({children}) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+             
+              <MenuItem  onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">
+                <Link to='/logout'>
+                  Logout
+                </Link>
+                </Typography>
+              </MenuItem>
+              
             </Menu>
           </Box>
         </Toolbar>
@@ -183,15 +193,21 @@ export default function NavBar({children}) {
         </DrawerHeader>
         <Divider />
         <List >
-          {[{label:'Cart',icon:<LocalGroceryStoreTwoToneIcon style={{color:'white'}}/>}, {label:'Store',icon:<StorefrontTwoToneIcon style={{color:'white'}}/>}].map((navItem, index) => (
+          {[
+            {label:'Cart', path: "/cart", icon: <Badge badgeContent={cart.length} color="primary"><LocalGroceryStoreTwoToneIcon style={{color:'white'}}/></Badge>},
+            {label:'Store', path:'/shop', icon:<StorefrontTwoToneIcon style={{color:'white'}}/>}
+          ].map((navItem, index) => (
             <ListItem button key={navItem.label}>
+              <Link to={navItem.path}>
               <ListItemIcon>
                  {navItem.icon}
               </ListItemIcon>
+              </Link>
               <ListItemText primary={navItem.label} />
             </ListItem>
           ))}
         </List>
+        <ThemeSwitch/>
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

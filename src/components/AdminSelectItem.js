@@ -34,7 +34,7 @@ export default function AdminSelectItem() {
                 placeholder="item"
                 onChange={(event)=>handleChange(event)}
             >
-                <MenuItem value="default"><em>None</em></MenuItem>
+                <MenuItem value="default"><em>Select Item to Edit</em></MenuItem>
                 {items?.map(
                     (i)=>(
                         <MenuItem key={i.id}  value={JSON.stringify(i)}>{i.name} | {i.id}</MenuItem>

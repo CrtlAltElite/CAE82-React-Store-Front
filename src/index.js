@@ -5,18 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import CssBaseline from '@mui/material/CssBaseline';
 import ThemeProvider from './context/ThemeContext';
-import rainbowTheme from './themes/rainbowTheme';
 import AppContextProvider from "./context/AppContext";
-
+import {BrowserRouter} from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider>
-      <AppContextProvider>
-        <CssBaseline />
-        <App />
-      </AppContextProvider>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider>
+        <AppContextProvider>
+          <CssBaseline />
+          <App />
+        </AppContextProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
