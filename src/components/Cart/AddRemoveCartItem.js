@@ -4,18 +4,21 @@ import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
 import RemoveCircleTwoToneIcon from '@mui/icons-material/RemoveCircleTwoTone';
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 
-import React from 'react'
+import React, {useContext} from 'react'
+import {AppContext} from '../../context/AppContext'
 
 export default function AddRemoveCartItem({item}) {
+  const {addToCart, removeFromCart, removeAllFromCart} = useContext(AppContext)
+
   return (
     <ButtonGroup sx={{margin:"auto"}}>
-        <IconButton key="delete" onClick={()=>{console.log('Removed all that Item from the cart')}}>
+        <IconButton key="delete" onClick={()=>{removeAllFromCart(item)}}>
           <DeleteForeverTwoToneIcon fontSize="small"/>
         </IconButton>
-        <IconButton  key="rm" onClick={()=>{console.log('Removed 1 of the items')}}>
+        <IconButton  key="rm" onClick={()=>{removeFromCart(item)}}>
           <RemoveCircleTwoToneIcon fontSize="small"/>
         </IconButton>
-        <IconButton  key="add" onClick={()=>{console.log('added 1 of the items')}}>
+        <IconButton  key="add" onClick={()=>{addToCart(item)}}>
           <AddCircleTwoToneIcon fontSize="small"/>
         </IconButton>
     </ButtonGroup>

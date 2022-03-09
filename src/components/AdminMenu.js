@@ -7,10 +7,11 @@ import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import CategoryTwoToneIcon from '@mui/icons-material/CategoryTwoTone';
 import PrecisionManufacturingTwoToneIcon from '@mui/icons-material/PrecisionManufacturingTwoTone';
+import {Link} from 'react-router-dom'
 
 const actions = [
-  { icon: <PrecisionManufacturingTwoToneIcon />, name: 'Add/Edit Item' },
-  { icon: <CategoryTwoToneIcon />, name: 'Add/Edit Category' },
+  { icon: <Link to='/adminitem'><PrecisionManufacturingTwoToneIcon /></Link>, name: 'Add/Edit Item' },
+  { icon: <Link to='/admincat'><CategoryTwoToneIcon /></Link>, name: 'Add/Edit Category' },
 ];
 
 export default function SpeedDialTooltipOpen() {

@@ -142,7 +142,7 @@ export default function ItemForm({item}) {
     <FormHelperText>{formik.touched.category_id && formik.errors.category_id}</FormHelperText>
 </FormControl>
 
-<Button type="submit" sx={{ width: "100%", my:1 }}>Submit</Button>
+<Button type="submit" sx={{ width: "100%", my:1 }}>{item?'Submit Edit':'Create Item'}</Button>
 <Button color="error" onClick={()=>handleDelete()} sx={{width:"100%", my:1}}>Delete Item</Button>
 
 </form>

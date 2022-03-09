@@ -65,7 +65,7 @@ export default function CatForm({ category }) {
             error={formik.touched.name && Boolean(formik.errors.name)}
             helperText={formik.touched.name && formik.errors.name}        
         />
-        <Button type="submit" sx={{width:"100%", my:1}}>Submit</Button>
+        <Button type="submit" sx={{width:"100%", my:1}}>{category?'Edit Category':'Create Category'}</Button>
         <Button color="error" onClick={()=>handleDelete()} sx={{width:"100%", my:1}}>Delete Category</Button>
     </form>
   )

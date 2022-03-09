@@ -17,6 +17,7 @@ export default function useItems(categoryID=null) {
         (async()=>{
             const response = await getItems(source.token);
             setItems(response);
+            
         })()
         return ()=>{source.cancel()}
     },[categoryID]

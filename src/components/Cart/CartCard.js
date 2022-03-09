@@ -15,12 +15,11 @@ export default function CartCard({item}) {
         <Typography variant="h6" gutterBottom>
           {item.name}
         </Typography>
-
         <Typography variant="body2" color="text.secondary">
           {item.desc.slice(0,20)}
         </Typography>
         <Typography variant="h6" color="text.secondary">
-          ${item.price.toFixed(2)}
+          ${item.price?.toFixed(2)}
         </Typography>
       </CardContent>
       <CardActions>

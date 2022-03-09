@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import './App.css';
 import Button from './components/Button';
 import Error from './components/Error';
@@ -18,22 +18,47 @@ import SnackBar from './components/SnackBar';
 import Cart from './components/Cart/Index';
 import ShopBrowser from './views/ShopBrowser';
 import AdminSelectItem from './components/AdminSelectItem';
+import CartPage from './views/CartPage';
+import AdminCategory from './views/AdminCategory';
+import AdminItem from './views/AdminItems';
+import {Routes, Route} from 'react-router-dom';
+import Login from './views/Login';
+import { AppContext } from './context/AppContext';
+import Logout  from './views/Logout';
+import RequireAdmin from './components/RequireAdmin';
 
-const handleClick = async () => {
-  const source = CancelToken.source();
-  const response_object = await postCategory('ZtyZo5GhHFuQ9tgbKAROkGzK3jTVSlAtEswA8paYfAQ', 'newCAT',source.token);
-  console.log(response_object)
-}
+
+const HomePage=()=>{return(<h1>Welcome to the show!</h1>)}
 
 
 function App() {
-
+  const {user}=useContext(AppContext)
 
   return (
     <>
       <SnackBar/>
       <NavBar>
-        <AdminSelectItem/>
+        <Routes>
+          <Route path="/" element={<HomePage/>}/>
+          <Route path="/cart" element={<CartPage/>}/>
+          <Route path="/shop" element={<ShopBrowser/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/logout" element={<Logout/>}/>
+
+          <Route path="/admincat" element={
+          <RequireAdmin redirectTo={"/login"}>
+            <AdminCategory/>
+          </RequireAdmin>
+        }/>
+        
+          <Route path="/adminitem" element={<RequireAdmin redirectTo={"/login"}><AdminItem/></RequireAdmin>}/>
+
+        
+        </Routes>
+
+        
+        {user.is_admin?<AdminMenu/>:''}
+
       </NavBar>
     </>
   );
@@ -42,6 +67,3 @@ function App() {
 export default App;
 
 
-// <CategoryBar setAlert={setAlert}/>
-// <ItemBrowser />
-// <Button onClick={handleClick}>Do API Call</Button>
