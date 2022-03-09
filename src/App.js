@@ -57,7 +57,7 @@ function App() {
         </Routes>
 
         
-        {user.is_admin?<AdminMenu/>:''}
+        {user?.is_admin?<AdminMenu/>:''}
 
       </NavBar>
     </>
